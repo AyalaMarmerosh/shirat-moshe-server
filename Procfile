@@ -1,0 +1,1 @@
+"web: dotnet MonthlyDataApi.dll" 

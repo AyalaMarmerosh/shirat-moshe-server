@@ -1,0 +1,12 @@
+C:\app\build\output\MonthlyDataApi.exe
+C:\app\build\output\appsettings.Development.json
+C:\app\build\output\appsettings.json
+C:\app\build\output\MonthlyDataApi.dll
+C:\app\build\output\MonthlyDataApi.deps.json
+C:\app\build\output\MonthlyDataApi.runtimeconfig.json
+C:\app\build\output\MonthlyDataApi.pdb
+C:\app\build\output\Microsoft.AspNetCore.OpenApi.dll
+C:\app\build\output\Microsoft.OpenApi.dll
+C:\app\build\output\Swashbuckle.AspNetCore.Swagger.dll
+C:\app\build\output\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\app\build\output\Swashbuckle.AspNetCore.SwaggerUI.dll
