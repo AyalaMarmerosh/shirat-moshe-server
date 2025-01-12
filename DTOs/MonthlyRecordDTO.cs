@@ -10,5 +10,8 @@
         public Boolean DidLargeTest { get; set; }
         public int Datot { get; set; }
         public int TotalAmount { get; set; }
+        public int OrElchanan { get; set; }
+        public int Add { get; set; }
+        public string? Notes { get; set; }
     }
 }

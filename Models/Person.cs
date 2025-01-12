@@ -33,11 +33,21 @@ namespace MonthlyDataApi.Models
             public Status Status { get; set; }
             public Datot Datot { get; set; }
             public string isPresent { get; set; }
+            public string? TeudatZeut { get; set; }
+            public DateTime? DateOfBirth { get; set; }
+            public string? Phone { get; set; }
+            public string? CellPhone { get; set; }
+            public string? CellPhone2 { get; set; }
+            public string? Street { get; set; }
+            public string? HouseNumber { get; set; }
+            public string? Bank { get; set; }
+            public string? Branch { get; set; }
+            public string? AccountNumber { get; set; }
         }
 
         public class MonthlyRecord
         {
-            public int Id { get; set; } // חובה להוסיף ID
+            public int Id { get; set; } 
             public int PersonId { get; set; }
             public string Month { get; set; }
             public string Year { get; set; }
@@ -46,6 +56,9 @@ namespace MonthlyDataApi.Models
             public bool DidLargeTest { get; set; }
             public int Datot { get; set; }
             public int TotalAmount { get; set; }
+            public int OrElchanan { get; set; }
+            public int Add { get; set; }
+            public string? Notes { get; set; }
         }
     }
 

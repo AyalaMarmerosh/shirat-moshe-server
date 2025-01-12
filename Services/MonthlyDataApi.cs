@@ -39,10 +39,20 @@ namespace MonthlyDataApi.Services
                 .Select(p => new AvrechDTO
                 {
                     Id = p.Id,
-                    FullName = $"{p.FirstName} {p.LastName}",
+                    FullName = $" {p.LastName} {p.FirstName}",
                     Status = p.Status.ToString().Replace("_"," "),
                     Datot = p.Datot.ToString().Replace("_", " "),
-                    isPresent = p.isPresent
+                    isPresent = p.isPresent,
+                    TeudatZeut = p.TeudatZeut,
+                    DateOfBirth = p.DateOfBirth,
+                    Phone= p.Phone,
+                    CellPhone= p.CellPhone,
+                    CellPhone2= p.CellPhone2,
+                    Street= p.Street,
+                    HouseNumber= p.HouseNumber,
+                    Bank = p.Bank,
+                    Branch = p.Branch,
+                    AccountNumber= p.AccountNumber
                 }).ToListAsync();
 
             var totalAvrechim = await _context.Persons.CountAsync();
@@ -63,7 +73,10 @@ namespace MonthlyDataApi.Services
                     IsChabura = md.IsChabura,
                     DidLargeTest = md.DidLargeTest,
                     Datot = md.Datot,
-                    TotalAmount = md.TotalAmount
+                    TotalAmount = md.TotalAmount,
+                    OrElchanan = md.OrElchanan,
+                    Add = md.Add,
+                    Notes= md.Notes
                 }).ToListAsync();
 
             return monthlyData;
@@ -76,10 +89,20 @@ namespace MonthlyDataApi.Services
                 .Select(p => new AvrechDTO
                 {
                     Id = p.Id,
-                    FullName = $"{p.FirstName} {p.LastName}",
+                    FullName = $"{p.LastName} {p.FirstName} ",
                     Status = p.Status.ToString(),
                     Datot = p.Datot.ToString(),
-                    isPresent = p.isPresent
+                    isPresent = p.isPresent,
+                    TeudatZeut = p.TeudatZeut,
+                    DateOfBirth = p.DateOfBirth,
+                    Phone = p.Phone,
+                    CellPhone = p.CellPhone,
+                    CellPhone2 = p.CellPhone2,
+                    Street = p.Street,
+                    HouseNumber = p.HouseNumber,
+                    Bank = p.Bank,
+                    Branch = p.Branch,
+                    AccountNumber = p.AccountNumber
                 })
                 .FirstOrDefaultAsync();
 
@@ -106,12 +129,29 @@ namespace MonthlyDataApi.Services
                 avrech.Status = Enum.Parse<Status>(avrechDTO.Status);
                 avrech.Datot = Enum.Parse<Datot>(avrechDTO.Datot);
                 avrech.isPresent = avrechDTO.isPresent;
+                avrech.Bank = avrechDTO.Bank;
+                avrech.Branch = avrechDTO.Branch;
+                avrech.AccountNumber = avrechDTO.AccountNumber;
+                avrech.TeudatZeut = avrechDTO.TeudatZeut;
+                avrech.Street = avrechDTO.Street;
+                avrech.DateOfBirth= avrechDTO.DateOfBirth;
+                avrech.Phone = avrechDTO.Phone;
+                avrech.CellPhone= avrechDTO.CellPhone;
+                avrech.CellPhone2= avrechDTO.CellPhone2;
+                avrech.HouseNumber= avrechDTO.HouseNumber;
                 await _context.SaveChangesAsync();
             }
         }
 
         public async Task AddAvrech(Person avrech)
         {
+            var existingAvrech = await _context.Persons
+                .FirstOrDefaultAsync(p => p.TeudatZeut == avrech.TeudatZeut);
+
+            if (existingAvrech != null)
+            {
+                throw new Exception("אברך עם מספר זהות זה כבר קיים");
+            }
             _context.Persons.Add(avrech);
             await _context.SaveChangesAsync();
         }
@@ -162,7 +202,7 @@ namespace MonthlyDataApi.Services
                 .Select(p => new AvrechDTO
                 {
                     Id = p.Id,
-                    FullName = $"{p.FirstName} {p.LastName}",
+                    FullName = $"{p.LastName} {p.FirstName}",
                     Status = p.Status.ToString().Replace("_", " "),
                     Datot = p.Datot.ToString().Replace("_", " "),
                     isPresent = p.isPresent
@@ -186,7 +226,10 @@ namespace MonthlyDataApi.Services
                                 IsChabura = md.IsChabura,
                                 DidLargeTest = md.DidLargeTest,
                                 Datot = md.Datot,
-                                TotalAmount = md.TotalAmount
+                                TotalAmount = md.TotalAmount,
+                                OrElchanan = md.OrElchanan,
+                                Add = md.Add,
+                                Notes= md.Notes
                             }).ToListAsync();
 
             return monthlyData;
@@ -198,10 +241,20 @@ namespace MonthlyDataApi.Services
                 .Select(p => new AvrechDTO
                 {
                     Id = p.Id,
-                    FullName = $"{p.FirstName} {p.LastName}",
+                    FullName = $" {p.LastName} {p.FirstName}",
                     Status = p.Status.ToString().Replace("_", " "),
                     Datot = p.Datot.ToString().Replace("_", " "),
-                    isPresent = p.isPresent
+                    isPresent = p.isPresent,
+                    TeudatZeut = p.TeudatZeut,
+                    DateOfBirth = p.DateOfBirth,
+                    Phone = p.Phone,
+                    CellPhone = p.CellPhone,
+                    CellPhone2 = p.CellPhone2,
+                    Street = p.Street,
+                    HouseNumber = p.HouseNumber,
+                    Bank = p.Bank,
+                    Branch = p.Branch,
+                    AccountNumber = p.AccountNumber
                 }).ToListAsync();
 
             return avrech;
