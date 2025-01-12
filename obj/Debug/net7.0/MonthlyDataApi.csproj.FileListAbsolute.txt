@@ -84,3 +84,4 @@ C:\Users\The user\Desktop\פרוייקט שירת משה\MonthlyDataApi\obj\Debu
 C:\Users\The user\Desktop\פרוייקט שירת משה\MonthlyDataApi\obj\Debug\net7.0\MonthlyDataApi.pdb
 C:\Users\The user\Desktop\פרוייקט שירת משה\MonthlyDataApi\obj\Debug\net7.0\MonthlyDataApi.genruntimeconfig.cache
 C:\Users\The user\Desktop\פרוייקט שירת משה\MonthlyDataApi\obj\Debug\net7.0\ref\MonthlyDataApi.dll
+C:\Users\The user\Desktop\פרוייקט שירת משה\MonthlyDataApi\bin\Debug\net7.0\Microsoft.AspNetCore.Identity.UI.dll
