@@ -75,7 +75,7 @@ namespace MonthlyDataApi.Services
                     Datot = md.Datot,
                     TotalAmount = md.TotalAmount,
                     OrElchanan = md.OrElchanan,
-                    Add = md.Add,
+                    AddAmount = md.AddAmount,
                     Notes= md.Notes
                 }).ToListAsync();
 
@@ -228,7 +228,7 @@ namespace MonthlyDataApi.Services
                                 Datot = md.Datot,
                                 TotalAmount = md.TotalAmount,
                                 OrElchanan = md.OrElchanan,
-                                Add = md.Add,
+                                AddAmount = md.AddAmount,
                                 Notes= md.Notes
                             }).ToListAsync();
 
