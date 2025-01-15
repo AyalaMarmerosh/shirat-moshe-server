@@ -25,8 +25,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateIssuer = true,
             ValidateAudience = true,
             ValidateLifetime = true,
-            ValidIssuer = "http://localhost",  // הכנס את ה-issuer שלך
-            ValidAudience = "http://localhost:4200",  // הכנס את ה-audience שלך
+            ValidIssuer = "https://shirat-moshe-server.onrender.com",  // הכנס את ה-issuer שלך
+            ValidAudience = "https://shirat-moshe.onrender.com",  // הכנס את ה-audience שלך
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("your-very-long-secret-key-32-bytes-long!your-very-long-secret-key-32-bytes-long!")) // הכנס את המפתח שלך
         };
     });
