@@ -10,6 +10,8 @@ namespace MonthlyDataApi.Services
         public string GenerateToken(string username)
         {
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("your-very-long-secret-key-32-bytes-long!your-very-long-secret-key-32-bytes-long!"));
+            var issuer = Environment.GetEnvironmentVariable("ISSUER") ?? "http://localhost";
+            var audience = Environment.GetEnvironmentVariable("AUDIENCE") ?? "http://localhost:4200";
 
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
@@ -23,8 +25,8 @@ namespace MonthlyDataApi.Services
             }),
                 Expires = DateTime.Now.AddHours(1),  // הזמן שבו הטוקן יפוג
                 SigningCredentials = credentials,
-                Issuer = "ISSUER" ?? "http://localhost",   // יש להחליף בשם הארגון או האתר שלך
-                Audience = "AUDIENCE" ?? "http://localhost:4200" // יש להחליף ב-audience המתאים
+                Issuer = issuer,   // יש להחליף בשם הארגון או האתר שלך
+                Audience = audience // יש להחליף ב-audience המתאים
             };
 
             var tokenHandler = new JwtSecurityTokenHandler();
