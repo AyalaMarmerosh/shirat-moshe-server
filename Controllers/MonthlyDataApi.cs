@@ -47,6 +47,8 @@ namespace MonthlyDataApi.Controllers
         [HttpPost("login")]
         public IActionResult Login([FromBody] LoginModel model)
         {
+            Console.WriteLine($"זה ניסיום: {model.Username}");
+
             try
             {
                 Console.WriteLine($"Login attempt for username: {model.Username}");
