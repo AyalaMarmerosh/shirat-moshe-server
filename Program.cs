@@ -34,6 +34,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
+        Console.WriteLine("JWT Authentication is configured");
         options.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateIssuer = true,
@@ -53,9 +54,11 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowSpecificOrigins",
         builder =>
         {
-            builder.WithOrigins("https://shirat-moshe.onrender.com")
+            builder.WithOrigins("https://shirat-moshe.onrender.com", "http://localhost:4200")
                    .AllowAnyMethod()
                    .AllowAnyHeader();
+            Console.WriteLine("CORS policy set for: https://shirat-moshe.onrender.com, http://localhost:4200");
+
         });
 });
 
@@ -79,6 +82,8 @@ app.UseHttpsRedirection();
 
 // Make sure to use CORS before UseAuthorization or UseEndpoints
 app.UseCors("AllowSpecificOrigins");
+Console.WriteLine("CORS middleware is applied");
+
 
 app.UseAuthentication();
 app.UseAuthorization();

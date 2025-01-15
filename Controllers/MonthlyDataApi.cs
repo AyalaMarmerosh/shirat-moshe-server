@@ -49,7 +49,9 @@ namespace MonthlyDataApi.Controllers
         {
             try
             {
+                Console.WriteLine($"Login attempt for username: {model.Username}");
                 var token = _loginService.Login(model.Username, model.Password);
+                Console.WriteLine($"Generated JWT for user: {model.Username}");
                 return Ok(new { Token = token });
             }
             catch (UnauthorizedAccessException)

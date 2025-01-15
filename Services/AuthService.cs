@@ -25,8 +25,8 @@ namespace MonthlyDataApi.Services
             }),
                 Expires = DateTime.Now.AddHours(1),  // הזמן שבו הטוקן יפוג
                 SigningCredentials = credentials,
-                Issuer = issuer,   // יש להחליף בשם הארגון או האתר שלך
-                Audience = audience // יש להחליף ב-audience המתאים
+                Issuer = issuer,   
+                Audience = audience 
             };
 
             var tokenHandler = new JwtSecurityTokenHandler();
