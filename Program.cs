@@ -40,8 +40,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateIssuer = true,
             ValidateAudience = true,
             ValidateLifetime = true,
-            ValidIssuer = Environment.GetEnvironmentVariable("https://shirat-moshe-server.onrender.com"),
-            ValidAudience = Environment.GetEnvironmentVariable("https://shirat-moshe.onrender.com"),
+            ValidIssuer = "https://shirat-moshe-server.onrender.com",
+            ValidAudience = "https://shirat-moshe.onrender.com",
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("your-very-long-secret-key-32-bytes-long!"))
         };
     });
