@@ -17,6 +17,20 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 
+//builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+//    .AddJwtBearer(options =>
+//    {
+//        options.TokenValidationParameters = new TokenValidationParameters
+//        {
+//            ValidateIssuer = true,
+//            ValidateAudience = true,
+//            ValidateLifetime = true,
+//            ValidIssuer = "https://shirat-moshe-server.onrender.com",  // הכנס את ה-issuer שלך
+//            ValidAudience = "https://shirat-moshe.onrender.com",  // הכנס את ה-audience שלך
+//            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("your-very-long-secret-key-32-bytes-long!your-very-long-secret-key-32-bytes-long!")) // הכנס את המפתח שלך
+//        };
+//    });
+
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -25,20 +39,21 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateIssuer = true,
             ValidateAudience = true,
             ValidateLifetime = true,
-            ValidIssuer = "https://shirat-moshe-server.onrender.com",  // הכנס את ה-issuer שלך
-            ValidAudience = "https://shirat-moshe.onrender.com",  // הכנס את ה-audience שלך
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("your-very-long-secret-key-32-bytes-long!your-very-long-secret-key-32-bytes-long!")) // הכנס את המפתח שלך
+            ValidIssuer = Environment.GetEnvironmentVariable("ISSUER") ?? "http://localhost",
+            ValidAudience = Environment.GetEnvironmentVariable("AUDIENCE") ?? "http://localhost:4200",
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("your-very-long-secret-key-32-bytes-long!"))
         };
     });
+
 
 
 // Configure CORS
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAllOrigins",
+    options.AddPolicy("AllowSpecificOrigins",
         builder =>
         {
-            builder.AllowAnyOrigin()
+            builder.WithOrigins("https://shirat-moshe.onrender.com")
                    .AllowAnyMethod()
                    .AllowAnyHeader();
         });
