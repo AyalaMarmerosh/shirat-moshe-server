@@ -7,10 +7,7 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddCsp(options => options
-    .DefaultSources(s => s.Self())  // מגדיר מקור ברירת מחדל ל-'self'
-    .ConnectSources(s => s.Self().CustomSources("https://shirat-moshe-server.onrender.com")) // מוסיף את ה-API שלך
-);
+
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -29,9 +26,9 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 //            ValidateIssuer = true,
 //            ValidateAudience = true,
 //            ValidateLifetime = true,
-//            ValidIssuer = "https://shirat-moshe-server.onrender.com",  // הכנס את ה-issuer שלך
-//            ValidAudience = "https://shirat-moshe.onrender.com",  // הכנס את ה-audience שלך
-//            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("your-very-long-secret-key-32-bytes-long!your-very-long-secret-key-32-bytes-long!")) // הכנס את המפתח שלך
+//            ValidIssuer = "https://shirat-moshe-server.onrender.com",  // ???? ?? ?-issuer ???
+//            ValidAudience = "https://shirat-moshe.onrender.com",  // ???? ?? ?-audience ???
+//            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("your-very-long-secret-key-32-bytes-long!your-very-long-secret-key-32-bytes-long!")) // ???? ?? ????? ???
 //        };
 //    });
 
@@ -83,6 +80,15 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.Use(async (context, next) =>
+{
+    // הוספת כותרת CSP
+    context.Response.Headers.Add("Content-Security-Policy",
+        "connect-src 'self' https://shirat-moshe-server.onrender.com;");
+
+    // המשך לטפל בשאר הבקשה
+    await next();
+});
 
 // Make sure to use CORS before UseAuthorization or UseEndpoints
 app.UseCors("AllowSpecificOrigins");
@@ -95,4 +101,3 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
-
