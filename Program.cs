@@ -7,6 +7,10 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddCsp(options => options
+    .DefaultSources(s => s.Self())  // מגדיר מקור ברירת מחדל ל-'self'
+    .ConnectSources(s => s.Self().CustomSources("https://shirat-moshe-server.onrender.com")) // מוסיף את ה-API שלך
+);
 // Add services to the container.
 
 builder.Services.AddControllers();
