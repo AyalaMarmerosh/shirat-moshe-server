@@ -50,17 +50,26 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 
 // Configure CORS
+//builder.Services.AddCors(options =>
+//{
+//    options.AddPolicy("AllowAllOrigins",
+//        builder =>
+//        {
+//            builder.AllowAnyOrigin()
+//                   .AllowAnyMethod()
+//                   .AllowAnyHeader();
+//        });
+//});
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAllOrigins",
+    options.AddPolicy("AllowSpecificOrigins",
         builder =>
         {
-            builder.AllowAnyOrigin()
+            builder.WithOrigins("https://shirat-moshe.onrender.com")  // הוסף את כתובת האתר שלך כאן
                    .AllowAnyMethod()
                    .AllowAnyHeader();
         });
 });
-
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -89,7 +98,7 @@ app.UseHttpsRedirection();
 //});
 
 // Make sure to use CORS before UseAuthorization or UseEndpoints
-app.UseCors("AllowAllOrigins");
+app.UseCors("AllowSpecificOrigins");
 Console.WriteLine("CORS middleware is applied");
 
 

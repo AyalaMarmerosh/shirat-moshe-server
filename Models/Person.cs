@@ -28,11 +28,11 @@ namespace MonthlyDataApi.Models
         public class Person
         {
             public int Id { get; set; }
-            public string FirstName { get; set; }
-            public string LastName { get; set; }
+            public string? FirstName { get; set; }
+            public string? LastName { get; set; }
             public Status Status { get; set; }
             public Datot Datot { get; set; }
-            public string isPresent { get; set; }
+            public string? isPresent { get; set; }
             public string? TeudatZeut { get; set; }
             public DateTime? DateOfBirth { get; set; }
             public string? Phone { get; set; }
