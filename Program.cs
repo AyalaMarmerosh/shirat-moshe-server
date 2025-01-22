@@ -52,14 +52,12 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 // Configure CORS
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowSpecificOrigins",
+    options.AddPolicy("AllowAllOrigins",
         builder =>
         {
-            builder.WithOrigins("https://shirat-moshe.onrender.com", "http://localhost:4200")
+            builder.AllowAnyOrigin()
                    .AllowAnyMethod()
                    .AllowAnyHeader();
-            Console.WriteLine("CORS policy set for: https://shirat-moshe.onrender.com, http://localhost:4200");
-
         });
 });
 
@@ -80,18 +78,18 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.Use(async (context, next) =>
-{
-    // הוספת כותרת CSP
-    context.Response.Headers.Add("Content-Security-Policy",
-        "connect-src 'self' https://shirat-moshe-server.onrender.com;");
+//app.Use(async (context, next) =>
+//{
+//    // הוספת כותרת CSP
+//    context.Response.Headers.Add("Content-Security-Policy",
+//        "connect-src 'self' https://shirat-moshe-server.onrender.com;");
 
-    // המשך לטפל בשאר הבקשה
-    await next();
-});
+//    // המשך לטפל בשאר הבקשה
+//    await next();
+//});
 
 // Make sure to use CORS before UseAuthorization or UseEndpoints
-app.UseCors("AllowSpecificOrigins");
+app.UseCors("AllowAllOrigins");
 Console.WriteLine("CORS middleware is applied");
 
 
