@@ -65,7 +65,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowSpecificOrigins",
         builder =>
         {
-            builder.WithOrigins("https://shirat-moshe.onrender.com")  // הוסף את כתובת האתר שלך כאן
+            builder.WithOrigins("http://localhost:4200", "https://shirat-moshe.onrender.com")
                    .AllowAnyMethod()
                    .AllowAnyHeader();
         });
