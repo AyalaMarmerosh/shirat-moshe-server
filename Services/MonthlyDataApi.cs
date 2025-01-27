@@ -39,7 +39,8 @@ namespace MonthlyDataApi.Services
                 .Select(p => new AvrechDTO
                 {
                     Id = p.Id,
-                    FullName = $" {p.LastName} {p.FirstName}",
+                    FirstName = p.FirstName,
+                    LastName = p.LastName,
                     Status = p.Status.ToString().Replace("_"," "),
                     Datot = p.Datot.ToString().Replace("_", " "),
                     isPresent = p.isPresent,
@@ -89,7 +90,8 @@ namespace MonthlyDataApi.Services
                 .Select(p => new AvrechDTO
                 {
                     Id = p.Id,
-                    FullName = $"{p.LastName} {p.FirstName} ",
+                    FirstName = p.FirstName,
+                    LastName = p.LastName,
                     Status = p.Status.ToString(),
                     Datot = p.Datot.ToString(),
                     isPresent = p.isPresent,
@@ -124,8 +126,8 @@ namespace MonthlyDataApi.Services
             var avrech = await _context.Persons.FindAsync(id);
             if (avrech != null)
             {
-                avrech.FirstName = avrechDTO.FullName.Split(' ')[0];
-                avrech.LastName = avrechDTO.FullName.Split(' ')[1];
+                avrech.FirstName = avrechDTO.FirstName;
+                avrech.LastName = avrechDTO.LastName;
                 avrech.Status = Enum.Parse<Status>(avrechDTO.Status);
                 avrech.Datot = Enum.Parse<Datot>(avrechDTO.Datot);
                 avrech.isPresent = avrechDTO.isPresent;
@@ -202,7 +204,8 @@ namespace MonthlyDataApi.Services
                 .Select(p => new AvrechDTO
                 {
                     Id = p.Id,
-                    FullName = $"{p.LastName} {p.FirstName}",
+                    FirstName = p.FirstName,
+                    LastName = p.LastName,
                     Status = p.Status.ToString().Replace("_", " "),
                     Datot = p.Datot.ToString().Replace("_", " "),
                     isPresent = p.isPresent
@@ -241,7 +244,8 @@ namespace MonthlyDataApi.Services
                 .Select(p => new AvrechDTO
                 {
                     Id = p.Id,
-                    FullName = $" {p.LastName} {p.FirstName}",
+                    FirstName = p.FirstName,
+                    LastName = p.LastName,
                     Status = p.Status.ToString().Replace("_", " "),
                     Datot = p.Datot.ToString().Replace("_", " "),
                     isPresent = p.isPresent,

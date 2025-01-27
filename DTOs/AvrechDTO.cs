@@ -5,8 +5,9 @@ namespace MonthlyDataApi.DTOs
 {
     public class AvrechDTO
     {
-        public int Id { get; set; }        
-        public string? FullName { get; set; } // שילוב של שם פרטי ושם משפחה
+        public int Id { get; set; }
+        public string? FirstName { get; set; }
+        public string? LastName { get; set; }
         public string? Status { get; set; } // ייתכן שתצטרך להמיר את המצב למחרוזת לקריאה נוחה
         public string Datot { get; set; }
         public string isPresent { get; set; }
