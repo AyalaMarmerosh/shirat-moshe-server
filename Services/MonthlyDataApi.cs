@@ -34,6 +34,7 @@ namespace MonthlyDataApi.Services
         public async Task<IEnumerable<AvrechDTO>> GetAvrechimAsync(int page, int pageSize)
         {
             var avrechim = await _context.Persons
+                .OrderBy(p => p.LastName)
                 .Skip((page - 1) * pageSize)
                 .Take(pageSize)
                 .Select(p => new AvrechDTO
