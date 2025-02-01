@@ -209,7 +209,17 @@ namespace MonthlyDataApi.Services
                     LastName = p.LastName,
                     Status = p.Status.ToString().Replace("_", " "),
                     Datot = p.Datot.ToString().Replace("_", " "),
-                    isPresent = p.isPresent
+                    isPresent = p.isPresent,
+                    Bank = p.Bank,
+                    Branch = p.Branch,
+                    AccountNumber = p.AccountNumber,
+                    Street = p.Street,
+                    Phone = p.Phone,
+                    CellPhone = p.CellPhone,
+                    CellPhone2 = p.CellPhone2,
+                    DateOfBirth = p.DateOfBirth,
+                    HouseNumber = p.HouseNumber,
+                    TeudatZeut = p.TeudatZeut
                 })
                 .ToListAsync();
 
