@@ -25,6 +25,7 @@ namespace MonthlyDataApi.Services
     public class MonthlyDataService : IMonthlyDataService
     {
         private readonly ApplicationDbContext _context;
+        private MonthlyRecord monthlyData;
 
         public MonthlyDataService(ApplicationDbContext context)
         {
@@ -117,6 +118,12 @@ namespace MonthlyDataApi.Services
             var avrech = await _context.Persons.FindAsync(id);
             if (avrech != null)
             {
+                var data = await _context.MonthlyRecords.Where(x => x.PersonId == id && x.Month == "Default").FirstOrDefaultAsync();
+                if (data != null)
+                {
+                    _context.MonthlyRecords.Remove(data);
+                }
+
                 _context.Persons.Remove(avrech);
                 await _context.SaveChangesAsync();
             }
@@ -158,20 +165,41 @@ namespace MonthlyDataApi.Services
             _context.Persons.Add(avrech);
             await _context.SaveChangesAsync();
 
-            var monthlyData = new MonthlyRecord
+            if(avrech.Status == Status.ראש_כולל || avrech.Status == Status.אברך_רצופות_יום_שלם)
             {
-                PersonId = avrech.Id,
-                Month = "Default",
-                Year = "Default",
-                BaseAllowance = 3000,
-                IsChabura =  false,
-                DidLargeTest= false,
-                Datot = 1000,
-                TotalAmount = 2000,
-                OrElchanan = 2000,
-                AddAmount = 0,
-                Notes = ""
-            };
+                monthlyData = new MonthlyRecord
+                {
+                    PersonId = avrech.Id,
+                    Month = "Default",
+                    Year = "Default",
+                    BaseAllowance = 3000,
+                    IsChabura = false,
+                    DidLargeTest = false,
+                    Datot = 1000,
+                    TotalAmount = 2000,
+                    OrElchanan = 2000,
+                    AddAmount = 0,
+                    Notes = ""
+                };
+            }
+            else
+            {
+                monthlyData = new MonthlyRecord
+                {
+                    PersonId = avrech.Id,
+                    Month = "Default",
+                    Year = "Default",
+                    BaseAllowance = 1500,
+                    IsChabura = false,
+                    DidLargeTest = false,
+                    Datot = 500,
+                    TotalAmount = 1000,
+                    OrElchanan = 1000,
+                    AddAmount = 0,
+                    Notes = ""
+                };
+            }
+            
             _context.MonthlyRecords.Add(monthlyData);
             await _context.SaveChangesAsync();
         }
