@@ -62,6 +62,32 @@ namespace MonthlyDataApi.Controllers
             }
         }
 
+        [HttpPost("update-credentials")]
+        public IActionResult UpdateCredentials([FromBody] UpdateCredentialsModel model)
+        {
+            try
+            {
+                _loginService.UpdateCredentials(model.OldUsername, model.NewUsername, model.NewPassword);
+                return Ok("User credentials updated successfully.");
+            }
+            catch (KeyNotFoundException)
+            {
+                return NotFound("User not found.");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        public class UpdateCredentialsModel
+        {
+            public string OldUsername { get; set; }
+            public string NewUsername { get; set; }
+            public string NewPassword { get; set; }
+        }
+
+
         [HttpPost("add")]
         public async Task<IActionResult> AddAvrech([FromBody] Person avrech)
         {

@@ -3,6 +3,10 @@
     public class LoginService
     {
         private readonly AuthService _authService;
+        private static Dictionary<string, string> _users = new()
+    {
+        { "שירת משה", "אבא שלי" } 
+    };
 
         public LoginService()
         {
@@ -11,16 +15,22 @@
 
         public string Login(string username, string password)
         {
-            // כאן תוסיף את ההיגיון שלך לבדוק אם שם המשתמש והסיסמא נכונים.
-            if (username == "שירת משה" && password == "אבא שלי")
+            if (_users.ContainsKey(username) && _users[username] == password)
             {
-                // אם ההתחברות הצליחה, יצור טוקן
                 return _authService.GenerateToken(username);
             }
-            else
+            throw new UnauthorizedAccessException("Invalid credentials.");
+        }
+        public void UpdateCredentials(string oldUsername, string newUsername, string newPassword)
+        {
+            if (!_users.ContainsKey(oldUsername))
             {
-                throw new UnauthorizedAccessException("Invalid credentials.");
+                throw new KeyNotFoundException("User not found.");
             }
+
+            // עדכון פרטי המשתמש
+            _users.Remove(oldUsername);
+            _users[newUsername] = newPassword;
         }
     }
 }
