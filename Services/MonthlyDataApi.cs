@@ -157,6 +157,23 @@ namespace MonthlyDataApi.Services
             }
             _context.Persons.Add(avrech);
             await _context.SaveChangesAsync();
+
+            var monthlyData = new MonthlyRecord
+            {
+                PersonId = avrech.Id,
+                Month = "Default",
+                Year = "Default",
+                BaseAllowance = 3000,
+                IsChabura =  false,
+                DidLargeTest= false,
+                Datot = 1000,
+                TotalAmount = 2000,
+                OrElchanan = 2000,
+                AddAmount = 0,
+                Notes = ""
+            };
+            _context.MonthlyRecords.Add(monthlyData);
+            await _context.SaveChangesAsync();
         }
 
         public async Task AddData(MonthlyRecord[] monthlyRecords)
