@@ -2,7 +2,7 @@
 {
     public class MonthlyRecordDTO
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
         public int PersonId { get; set; }
         public string Month { get; set; }
         public string Year { get; set; }
