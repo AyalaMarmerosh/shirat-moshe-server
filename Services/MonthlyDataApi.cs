@@ -206,6 +206,14 @@ namespace MonthlyDataApi.Services
 
         public async Task AddData(MonthlyRecord[] monthlyRecords)
         {
+            foreach( var rec in monthlyRecords )
+            {
+                var existingRecord = await _context.MonthlyRecords.FirstOrDefaultAsync(r => r.Month == rec.Month && r.Year == rec.Year);
+                if(existingRecord != null)
+                {
+                    throw new InvalidOperationException("נתונים עבור החודש והשנה הללו כבר קיימים.");
+                }
+            }
             _context.MonthlyRecords.AddRangeAsync(monthlyRecords);
             await _context.SaveChangesAsync();
         }
