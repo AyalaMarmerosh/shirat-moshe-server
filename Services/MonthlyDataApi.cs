@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using MonthlyDataApi.DTOs;
 using MonthlyDataApi.Models;
 using MonthlyDataApi.Models.MonthlyDataApi.Models;
@@ -206,16 +208,25 @@ namespace MonthlyDataApi.Services
 
         public async Task AddData(MonthlyRecord[] monthlyRecords)
         {
-            foreach( var rec in monthlyRecords )
+            var conflicts = new List<string>();
+
+            foreach ( var rec in monthlyRecords )
             {
-                var existingRecord = await _context.MonthlyRecords.FirstOrDefaultAsync(r => r.Month == rec.Month && r.Year == rec.Year);
-                if(existingRecord != null)
+                var existingRecord = await _context.MonthlyRecords.AnyAsync(r => r.PersonId == rec.PersonId && r.Month == rec.Month && r.Year == rec.Year);
+
+                if (existingRecord)
                 {
-                    throw new InvalidOperationException("נתונים עבור החודש והשנה הללו כבר קיימים.");
+                    conflicts.Add($"נתונים עבור {rec.Month}/{rec.Year} עבור אדם עם מזהה {rec.PersonId} כבר קיימים.");
+                }
+
+                if (conflicts.Any())
+                {
+                    throw new InvalidOperationException(string.Join(" | ", conflicts));
                 }
             }
             _context.MonthlyRecords.AddRangeAsync(monthlyRecords);
             await _context.SaveChangesAsync();
+
         }
 
         public async Task<IEnumerable<AvrechDTO>> SearchAvrechAsync(string query, string presence, string datot, string status)

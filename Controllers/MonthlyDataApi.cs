@@ -104,14 +104,23 @@ namespace MonthlyDataApi.Controllers
         [HttpPost("addData")]
         public async Task<IActionResult> AddData([FromBody] MonthlyRecord[] monthlyRecords)
         {
+            if (monthlyRecords == null || !monthlyRecords.Any())
+            {
+                return BadRequest(new { message = "הנתונים שהוזנו אינם תקינים." });
+            }
+
             try
             {
                 await _dataService.AddData(monthlyRecords);
-                return Ok(monthlyRecords);
+                return Ok(new { message = "הנתונים נוספו בהצלחה." });
+            }
+            catch (InvalidOperationException ex)
+            {
+                return Conflict(new { message = ex.Message });
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(new { message = $"שגיאה כללית: {ex.Message}" });
             }
         }
 
