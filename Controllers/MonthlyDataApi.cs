@@ -150,6 +150,19 @@ namespace MonthlyDataApi.Controllers
             return Ok(avrechDTO);
         }
 
+        [HttpPut("{id}/data")]
+        public async Task<IActionResult> UpdateData(int id, [FromBody] MonthlyRecordDTO monthlyRecordDTO)
+        {
+            var data = await _dataService.GetDataById(id);
+            if (data == null)
+            {
+                return NotFound("Data not found");
+            }
+
+            await _dataService.UpdateData(id, monthlyRecordDTO);
+            return Ok(monthlyRecordDTO);
+        }
+
         [HttpGet("search")]
         public async Task<IActionResult> SearchAvrech([FromQuery] string query = "", [FromQuery] string presence = "", [FromQuery] string datot = "", [FromQuery] string status = "")
         {

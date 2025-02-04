@@ -14,8 +14,10 @@ namespace MonthlyDataApi.Services
         Task<IEnumerable<AvrechDTO>> GetAvrechimAsync(int page, int pageSize);
         Task<IEnumerable<MonthlyRecordDTO>> GetMonthlyDataAsync(int id, string year, string month);
         Task<AvrechDTO> GetAvrechById(int id); // מתודה לקבלת פרטי אברך לפי מזהה
+        Task<MonthlyRecordDTO> GetDataById(int id); 
         Task DeleteAvrech(int id); // מתודה למחיקת אברך
         Task UpdateAvrech(int id, AvrechDTO avrechDTO); // מתודה לעדכון פרטי אברך
+        Task UpdateData(int id, MonthlyRecordDTO monthlyRecordDTO); // 
         Task AddAvrech(Person avrech); // מתודה להוספת אברך
         Task AddData(MonthlyRecord[] monthlyRecords);
         Task<IEnumerable<AvrechDTO>> SearchAvrechAsync(string query, string presence, string datot, string status);
@@ -71,6 +73,7 @@ namespace MonthlyDataApi.Services
                 .Where(md => md.PersonId == personId && md.Year == year && (string.IsNullOrEmpty(month) || md.Month == month))
                 .Select(md => new MonthlyRecordDTO
                 {
+                    Id = md.Id,
                     PersonId = md.PersonId,
                     Year = md.Year,
                     Month = md.Month,
@@ -115,6 +118,30 @@ namespace MonthlyDataApi.Services
             return avrech;
         }
 
+        public async Task<MonthlyRecordDTO> GetDataById(int id)
+        {
+            var data = await _context.MonthlyRecords
+                .Where(p => p.Id == id)
+                .Select(p => new MonthlyRecordDTO
+                {
+                    Id = p.Id,
+                    PersonId = p.PersonId,
+                    Month = p.Month,
+                    Year = p.Year,
+                    BaseAllowance = p.BaseAllowance,
+                    IsChabura = p.IsChabura,
+                    DidLargeTest = p.DidLargeTest,
+                    Datot = p.Datot,
+                    TotalAmount = p.TotalAmount,
+                    OrElchanan = p.OrElchanan,
+                    AddAmount = p.AddAmount,
+                    Notes = p.Notes
+                })
+                .FirstOrDefaultAsync();
+
+            return data;
+        }
+
         public async Task DeleteAvrech(int id)
         {
             var avrech = await _context.Persons.FindAsync(id);
@@ -151,6 +178,27 @@ namespace MonthlyDataApi.Services
                 avrech.CellPhone= avrechDTO.CellPhone;
                 avrech.CellPhone2= avrechDTO.CellPhone2;
                 avrech.HouseNumber= avrechDTO.HouseNumber;
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        public async Task UpdateData(int id, MonthlyRecordDTO monthlyRecordDTO)
+        {
+            var data = await _context.MonthlyRecords.FindAsync(id);
+            if (data != null)
+            {
+                data.Id = monthlyRecordDTO.Id;
+                data.PersonId = monthlyRecordDTO.PersonId;
+                data.Month = monthlyRecordDTO.Month;
+                data.Year = monthlyRecordDTO.Year;
+                data.BaseAllowance = monthlyRecordDTO.BaseAllowance;
+                data.IsChabura = monthlyRecordDTO.IsChabura;
+                data.DidLargeTest = monthlyRecordDTO.DidLargeTest;
+                data.Datot = monthlyRecordDTO.Datot;
+                data.OrElchanan = monthlyRecordDTO.OrElchanan;
+                data.TotalAmount = monthlyRecordDTO.TotalAmount;
+                data.AddAmount = monthlyRecordDTO.AddAmount;
+                data.Notes = monthlyRecordDTO.Notes;
                 await _context.SaveChangesAsync();
             }
         }
@@ -296,7 +344,7 @@ namespace MonthlyDataApi.Services
             var monthlyData = await _context.MonthlyRecords
                             .Where(md => (string.IsNullOrEmpty(year) || md.Year == year) && (string.IsNullOrEmpty(month) || md.Month == month))
                             .Select(md => new MonthlyRecordDTO
-                            {
+                            {Id = md.Id,
                                 PersonId = md.PersonId,
                                 Year = md.Year,
                                 Month = md.Month,
