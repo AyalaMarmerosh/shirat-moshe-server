@@ -187,7 +187,7 @@ namespace MonthlyDataApi.Services
             var data = await _context.MonthlyRecords.FindAsync(id);
             if (data != null)
             {
-                data.Id = monthlyRecordDTO.Id;
+                data.Id = (int)monthlyRecordDTO.Id;
                 data.PersonId = monthlyRecordDTO.PersonId;
                 data.Month = monthlyRecordDTO.Month;
                 data.Year = monthlyRecordDTO.Year;
