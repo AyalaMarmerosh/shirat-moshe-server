@@ -7,10 +7,19 @@ namespace MonthlyDataApi.Services
 {
     public class EmailService
     {
-        private readonly string _smtpServer = "smtp.gmail.com";   // שרת ה-SMTP של Gmail
-        private readonly int _smtpPort = 587;                      // פורט SMTP של Gmail
-        private readonly string _smtpUser = "hyylhyyly@gmail.com"; // כתובת המייל שלך ב-Gmail
-        private readonly string _smtpPassword = "libw pdeh iwrj ntqx"; // סיסמת האפליקציה שלך (לא הסיסמה הרגילה)
+        private readonly string _smtpServer;
+        private readonly int _smtpPort;
+        private readonly string _smtpUser;
+        private readonly string _smtpPassword;
+
+        // קונסטרוקטור שיקבל את ההגדרות מהקונפיגורציה
+        public EmailService(IConfiguration configuration)
+        {
+            _smtpServer = configuration["EmailSettings:SmtpServer"];
+            _smtpPort = int.Parse(configuration["EmailSettings:SmtpPort"]);
+            _smtpUser = configuration["EmailSettings:SmtpUser"];
+            _smtpPassword = configuration["EmailSettings:SmtpPassword"];
+        }
 
         public async Task SendEmail(string toEmail, string subject, string message)
         {

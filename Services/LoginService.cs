@@ -1,4 +1,6 @@
-﻿namespace MonthlyDataApi.Services
+﻿using Microsoft.Extensions.Configuration;
+
+namespace MonthlyDataApi.Services
 {
     public class LoginService
     {
@@ -10,10 +12,10 @@
         { "שירת משה", "אבא שלי" } 
     };
 
-        public LoginService()
+        public LoginService(IConfiguration configuration)
         {
             _authService = new AuthService();
-            _emailService = new EmailService(); // אתחול השירות
+            _emailService = new EmailService(configuration); // אתחול השירות
         }
         private static Dictionary<string, string> _verificationCodes = new();
 
