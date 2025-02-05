@@ -89,3 +89,13 @@ C:\Users\The user\Desktop\פרוייקט שירת משה\MonthlyDataApi\bin\Debu
 C:\Users\The user\Desktop\פרוייקט שירת משה\MonthlyDataApi\bin\Debug\net7.0\Newtonsoft.Json.dll
 C:\Users\The user\Desktop\פרוייקט שירת משה\MonthlyDataApi\bin\Debug\net7.0\NWebsec.AspNetCore.Core.dll
 C:\Users\The user\Desktop\פרוייקט שירת משה\MonthlyDataApi\bin\Debug\net7.0\NWebsec.AspNetCore.Middleware.dll
+C:\Users\The user\Desktop\פרוייקט שירת משה\MonthlyDataApi\bin\Debug\net7.0\BouncyCastle.Cryptography.dll
+C:\Users\The user\Desktop\פרוייקט שירת משה\MonthlyDataApi\bin\Debug\net7.0\MailKit.dll
+C:\Users\The user\Desktop\פרוייקט שירת משה\MonthlyDataApi\bin\Debug\net7.0\MimeKit.dll
+C:\Users\The user\Desktop\פרוייקט שירת משה\MonthlyDataApi\bin\Debug\net7.0\SendGrid.dll
+C:\Users\The user\Desktop\פרוייקט שירת משה\MonthlyDataApi\bin\Debug\net7.0\StarkbankEcdsa.dll
+C:\Users\The user\Desktop\פרוייקט שירת משה\MonthlyDataApi\bin\Debug\net7.0\System.Formats.Asn1.dll
+C:\Users\The user\Desktop\פרוייקט שירת משה\MonthlyDataApi\bin\Debug\net7.0\System.Security.Cryptography.Pkcs.dll
+C:\Users\The user\Desktop\פרוייקט שירת משה\MonthlyDataApi\bin\Debug\net7.0\System.Text.Encoding.CodePages.dll
+C:\Users\The user\Desktop\פרוייקט שירת משה\MonthlyDataApi\bin\Debug\net7.0\runtimes\win\lib\net7.0\System.Security.Cryptography.Pkcs.dll
+C:\Users\The user\Desktop\פרוייקט שירת משה\MonthlyDataApi\bin\Debug\net7.0\runtimes\win\lib\net7.0\System.Text.Encoding.CodePages.dll

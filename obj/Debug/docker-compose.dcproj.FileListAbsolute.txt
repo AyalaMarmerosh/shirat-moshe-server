@@ -24,3 +24,8 @@ C:\Users\The user\Desktop\פרוייקט שירת משה\MonthlyDataApi\bin\Debu
 C:\Users\The user\Desktop\פרוייקט שירת משה\MonthlyDataApi\obj\Debug\docker-compose.dcproj.AssemblyReference.cache
 C:\Users\The user\Desktop\פרוייקט שירת משה\MonthlyDataApi\obj\Debug\docker-compose.dcproj.CoreCompileInputs.cache
 C:\Users\The user\Desktop\פרוייקט שירת משה\MonthlyDataApi\obj\Debug\docker-compose.dcproj.CopyComplete
+C:\Users\The user\Desktop\פרוייקט שירת משה\MonthlyDataApi\bin\Debug\MimeKit.dll
+C:\Users\The user\Desktop\פרוייקט שירת משה\MonthlyDataApi\bin\Debug\MailKit.dll
+C:\Users\The user\Desktop\פרוייקט שירת משה\MonthlyDataApi\bin\Debug\BouncyCastle.Cryptography.dll
+C:\Users\The user\Desktop\פרוייקט שירת משה\MonthlyDataApi\bin\Debug\System.Security.Cryptography.Pkcs.dll
+C:\Users\The user\Desktop\פרוייקט שירת משה\MonthlyDataApi\bin\Debug\System.Formats.Asn1.dll

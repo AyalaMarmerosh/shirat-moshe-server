@@ -62,13 +62,39 @@ namespace MonthlyDataApi.Controllers
             }
         }
 
-        [HttpPost("update-credentials")]
-        public IActionResult UpdateCredentials([FromBody] UpdateCredentialsModel model)
+        // שלב 1: שליחת קוד אימות
+        [HttpPost("send-verification-code")]
+        public IActionResult SendVerificationCode([FromBody] UpdateCredentialsModel model)
         {
             try
             {
-                _loginService.UpdateCredentials(model.OldUsername, model.NewUsername, model.NewPassword);
+                _loginService.SendVerificationCode(model.OldUsername);
+                return Ok("Verification code sent to your email.");
+            }
+            catch (KeyNotFoundException)
+            {
+                return NotFound("User not found.");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        // שלב 2: עדכון פרטי המשתמש אם הקוד תקין
+        [HttpPost("update-credentials")]
+        public IActionResult UpdateCredentials([FromBody] UpdateCredentialsModel model, [FromQuery] string code)
+        {
+            try
+            {
+                // שלב 2 - עדכון פרטי המשתמש אחרי קבלת קוד אימות
+                //var email = _loginService.GetEmailByUsername(model.OldUsername);
+                _loginService.UpdateCredentialsWithCode(model.OldUsername, model.NewUsername, model.NewPassword, code);
                 return Ok("User credentials updated successfully.");
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return BadRequest("Invalid verification code.");
             }
             catch (KeyNotFoundException)
             {
