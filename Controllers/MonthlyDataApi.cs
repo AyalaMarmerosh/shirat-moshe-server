@@ -127,6 +127,21 @@ namespace MonthlyDataApi.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpPost("add-one-data")]
+        public async Task<IActionResult> AddOneData([FromBody] MonthlyRecord data)
+        {
+            try
+            {
+                await _dataService.AddOneData(data);
+                return Ok(data);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
         [HttpPost("addData")]
         public async Task<IActionResult> AddData([FromBody] MonthlyRecord[] monthlyRecords)
         {
@@ -160,6 +175,19 @@ namespace MonthlyDataApi.Controllers
             }
 
             await _dataService.DeleteAvrech(id);
+            return NoContent();
+        }
+
+        [HttpDelete("{id}/data")]
+        public async Task<IActionResult> DeleteData(int id)
+        {
+            var data = await _dataService.GetDataById(id);
+            if (data == null)
+            {
+                return NotFound("Data not found");
+            }
+
+            await _dataService.DeleteData(id);
             return NoContent();
         }
 

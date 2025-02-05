@@ -16,9 +16,11 @@ namespace MonthlyDataApi.Services
         Task<AvrechDTO> GetAvrechById(int id); // מתודה לקבלת פרטי אברך לפי מזהה
         Task<MonthlyRecordDTO> GetDataById(int id); 
         Task DeleteAvrech(int id); // מתודה למחיקת אברך
+        Task DeleteData(int id); // מתודה למחיקת 
         Task UpdateAvrech(int id, AvrechDTO avrechDTO); // מתודה לעדכון פרטי אברך
         Task UpdateData(int id, MonthlyRecordDTO monthlyRecordDTO); // 
         Task AddAvrech(Person avrech); // מתודה להוספת אברך
+        Task AddOneData(MonthlyRecord data); // מתודה להוספת 
         Task AddData(MonthlyRecord[] monthlyRecords);
         Task<IEnumerable<AvrechDTO>> SearchAvrechAsync(string query, string presence, string datot, string status);
         Task<IEnumerable<MonthlyRecordDTO>> GetLastMonthDataAsync(string year, string month);
@@ -158,6 +160,16 @@ namespace MonthlyDataApi.Services
             }
         }
 
+        public async Task DeleteData(int id)
+        {
+            var data = await _context.MonthlyRecords.FindAsync(id);
+            if (data != null)
+            {
+                _context.MonthlyRecords.Remove(data);
+                await _context.SaveChangesAsync();
+            }
+        }
+
         public async Task UpdateAvrech(int id, AvrechDTO avrechDTO)
         {
             var avrech = await _context.Persons.FindAsync(id);
@@ -253,6 +265,28 @@ namespace MonthlyDataApi.Services
             _context.MonthlyRecords.Add(monthlyData);
             await _context.SaveChangesAsync();
         }
+
+        public async Task AddOneData(MonthlyRecord data)
+        {
+            var conflicts = new List<string>();
+            
+            var existingRecord = await _context.MonthlyRecords.AnyAsync(r => r.PersonId == data.PersonId && r.Month == data.Month && r.Year == data.Year);
+
+                if (existingRecord)
+                {
+                    conflicts.Add($"נתונים עבור {data.Month}/{data.Year} עבור אדם עם מזהה {data.PersonId} כבר קיימים.");
+                }
+
+                if (conflicts.Any())
+                {
+                    throw new InvalidOperationException(string.Join(" | ", conflicts));
+                }
+
+            _context.MonthlyRecords.AddRangeAsync(data);
+            await _context.SaveChangesAsync();
+
+        }
+
 
         public async Task AddData(MonthlyRecord[] monthlyRecords)
         {
