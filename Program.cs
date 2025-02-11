@@ -7,6 +7,9 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var configuration = builder.Configuration;
+
+builder.Services.AddSingleton<AuthService>();
 
 // Add services to the container.
 
@@ -35,16 +38,35 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
+        options.Events = new JwtBearerEvents
+        {
+            OnAuthenticationFailed = context =>
+            {
+                Console.WriteLine($"Authentication failed: {context.Exception.Message}");
+                return Task.CompletedTask;
+            },
+            OnChallenge = context =>
+            {
+                Console.WriteLine($"Challenge: {context.Error}");
+                return Task.CompletedTask;
+            },
+        };
         Console.WriteLine("JWT Authentication is configured");
         var config = builder.Configuration.GetSection("Jwt");
+        var validIssuer = config["Issuer"];
+        var validAudience = config["Audience"];
+        //Console.WriteLine($"Issuer: {validIssuers[0]}, {validIssuers[1]}");
+        //Console.WriteLine($"Audience: {validAudiences[0]}, {validAudiences[1]}");
+        //Console.WriteLine($"Key: {config["Key"]}");
+        //Console.WriteLine($"Signing Key Length: {config["Key"].Length}");
         options.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateIssuer = true,
-            ValidateAudience = true,
+            ValidateAudience = false,
             ValidateLifetime = true,
             ValidateIssuerSigningKey = true,
-            ValidIssuer = config["Issur"],
-            ValidAudience = config["Audience"],
+            ValidIssuer = validIssuer,
+            ValidAudience = validAudience,
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["Key"]))
         };
     });
@@ -106,6 +128,20 @@ Console.WriteLine("CORS middleware is applied");
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.Use(async (context, next) =>
+{
+    try
+    {
+        await next.Invoke();
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"An error occurred: {ex.Message}");
+        context.Response.StatusCode = 401; // Unauthorized
+        await context.Response.WriteAsync("Unauthorized: " + ex.Message);
+    }
+});
 
 app.MapControllers();
 

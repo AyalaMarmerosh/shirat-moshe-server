@@ -7,11 +7,17 @@ namespace MonthlyDataApi.Services
 {
     public class AuthService
     {
+        private readonly IConfiguration _configuration;
+
+        public AuthService(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
         public string GenerateToken(string username)
         {
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("your-very-long-secret-key-32-bytes-long!your-very-long-secret-key-32-bytes-long!"));
-            var issuer = Environment.GetEnvironmentVariable("ISSUER") ?? "https://shirat-moshe-server.onrender.com";
-            var audience = Environment.GetEnvironmentVariable("AUDIENCE") ?? "http://localhost:4200";
+            var issuer = _configuration["Jwt:Issuer"];
+            var audience = _configuration["Jwt:Audience"];
 
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 

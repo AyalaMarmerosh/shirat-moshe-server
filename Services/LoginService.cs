@@ -14,7 +14,7 @@ namespace MonthlyDataApi.Services
 
         public LoginService(IConfiguration configuration)
         {
-            _authService = new AuthService();
+            _authService = new AuthService(configuration);
             _emailService = new EmailService(configuration); // אתחול השירות
         }
         private static Dictionary<string, string> _verificationCodes = new();
