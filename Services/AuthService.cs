@@ -10,7 +10,7 @@ namespace MonthlyDataApi.Services
         public string GenerateToken(string username)
         {
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("your-very-long-secret-key-32-bytes-long!your-very-long-secret-key-32-bytes-long!"));
-            var issuer = Environment.GetEnvironmentVariable("ISSUER") ?? "http://localhost";
+            var issuer = Environment.GetEnvironmentVariable("ISSUER") ?? "https://shirat-moshe-server.onrender.com";
             var audience = Environment.GetEnvironmentVariable("AUDIENCE") ?? "http://localhost:4200";
 
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);

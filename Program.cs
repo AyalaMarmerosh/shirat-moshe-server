@@ -36,14 +36,16 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
         Console.WriteLine("JWT Authentication is configured");
+        var config = builder.Configuration.GetSection("Jwt");
         options.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateIssuer = true,
             ValidateAudience = true,
             ValidateLifetime = true,
-            ValidIssuer = "https://shirat-moshe-server.onrender.com",
-            ValidAudience = "https://shirat-moshe.onrender.com",
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("your-very-long-secret-key-32-bytes-long!"))
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = config["Issur"],
+            ValidAudience = config["Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["Key"]))
         };
     });
 
