@@ -42,6 +42,7 @@ namespace MonthlyDataApi.Services
         {
             var avrechim = await _context.Persons
                 .OrderBy(p => p.LastName)
+                .ThenBy(p => p.FirstName)
                 .Skip((page - 1) * pageSize)
                 .Take(pageSize)
                 .Select(p => new AvrechDTO

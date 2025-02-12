@@ -168,7 +168,7 @@ namespace MonthlyDataApi.Controllers
             }
             catch (UnauthorizedAccessException ex)
             {
-                return Forbid();  // מחזיר 403
+                return Conflict(new { message = ex.Message });
             }
             catch (Exception ex)
             {
