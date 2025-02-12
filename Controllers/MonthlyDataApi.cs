@@ -166,6 +166,10 @@ namespace MonthlyDataApi.Controllers
             {
                 return Conflict(new { message = ex.Message });
             }
+            catch (UnauthorizedAccessException ex)
+            {
+                return Forbid();  // מחזיר 403
+            }
             catch (Exception ex)
             {
                 return BadRequest(new { message = $"שגיאה כללית: {ex.Message}" });
