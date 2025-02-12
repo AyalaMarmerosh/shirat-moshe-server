@@ -23,7 +23,7 @@ namespace MonthlyDataApi.Controllers
         }
 
         [HttpGet]
-        [Authorize]
+        [Authorize(Roles = "Admin,Viewer")]
         public async Task<IActionResult> GetAvrechim([FromQuery] int page = 1, [FromQuery] int pageSize = 10)
         {
             var avrechim = await _dataService.GetAvrechimAsync(page, pageSize);
@@ -33,7 +33,7 @@ namespace MonthlyDataApi.Controllers
         }
 
         [HttpGet("{id}/monthlydata")]
-        [Authorize]
+        [Authorize(Roles = "Admin,Viewer")]
         public async Task<IActionResult> GetMonthlyData(int id, [FromQuery] string year, [FromQuery] string? month)
         {
             var monthlyData = await _dataService.GetMonthlyDataAsync(id, year, month);
@@ -41,7 +41,7 @@ namespace MonthlyDataApi.Controllers
         }
 
         [HttpGet("{id}/avrech")]
-        [Authorize]
+        [Authorize(Roles = "Admin,Viewer")]
         public async Task<IActionResult> getAvrechById(int id)
         {
             var avrech = await _dataService.getAvrechByIdAsync(id);
@@ -119,7 +119,7 @@ namespace MonthlyDataApi.Controllers
 
 
         [HttpPost("add")]
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> AddAvrech([FromBody] Person avrech)
         {
             try
@@ -134,7 +134,7 @@ namespace MonthlyDataApi.Controllers
         }
 
         [HttpPost("add-one-data")]
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> AddOneData([FromBody] MonthlyRecord data)
         {
             try
@@ -149,7 +149,7 @@ namespace MonthlyDataApi.Controllers
         }
 
         [HttpPost("addData")]
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> AddData([FromBody] MonthlyRecord[] monthlyRecords)
         {
             if (monthlyRecords == null || !monthlyRecords.Any())
@@ -173,7 +173,7 @@ namespace MonthlyDataApi.Controllers
         }
 
         [HttpDelete("{id}")]
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteAvrech(int id)
         {
             var avrech = await _dataService.GetAvrechById(id);
@@ -187,7 +187,7 @@ namespace MonthlyDataApi.Controllers
         }
 
         [HttpDelete("{id}/data")]
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteData(int id)
         {
             var data = await _dataService.GetDataById(id);
@@ -201,7 +201,7 @@ namespace MonthlyDataApi.Controllers
         }
 
         [HttpPut("{id}")]
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateAvrech(int id, [FromBody] AvrechDTO avrechDTO)
         {
             var avrech = await _dataService.GetAvrechById(id);
@@ -215,7 +215,7 @@ namespace MonthlyDataApi.Controllers
         }
 
         [HttpPut("{id}/data")]
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateData(int id, [FromBody] MonthlyRecordDTO monthlyRecordDTO)
         {
             var data = await _dataService.GetDataById(id);
@@ -229,7 +229,7 @@ namespace MonthlyDataApi.Controllers
         }
 
         [HttpGet("search")]
-        [Authorize]
+        [Authorize(Roles = "Admin,Viewer")]
         public async Task<IActionResult> SearchAvrech([FromQuery] string query = "", [FromQuery] string presence = "", [FromQuery] string datot = "", [FromQuery] string status = "")
         {
             var avrech = await _dataService.SearchAvrechAsync(query, presence, datot, status);
@@ -238,7 +238,7 @@ namespace MonthlyDataApi.Controllers
         }
 
         [HttpGet("last-month")]
-        [Authorize]
+        [Authorize(Roles = "Admin,Viewer")]
         public async Task<IActionResult> GetLastMonthData([FromQuery] string? year, [FromQuery] string? month)
         {
             try

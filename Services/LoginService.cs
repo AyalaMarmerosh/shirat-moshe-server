@@ -7,26 +7,21 @@ namespace MonthlyDataApi.Services
         private readonly AuthService _authService;
         private readonly EmailService _emailService;
 
-        private static Dictionary<string, string> _users = new()
-    {
-        { "שירת משה", "אבא שלי" } 
-    };
 
         public LoginService(IConfiguration configuration)
         {
             _authService = new AuthService(configuration);
             _emailService = new EmailService(configuration); // אתחול השירות
         }
+
         private static Dictionary<string, string> _verificationCodes = new();
-
-
-
 
         public string Login(string username, string password)
         {
-            if (_users.ContainsKey(username) && _users[username] == password)
+            if (UserStorage.Users.ContainsKey(username) && UserStorage.Users[username].Password == password)
             {
-                return _authService.GenerateToken(username);
+                var role = UserStorage.Users[username].Role;
+                return _authService.GenerateToken(username, role);
             }
             throw new UnauthorizedAccessException("Invalid credentials.");
         }
@@ -34,7 +29,7 @@ namespace MonthlyDataApi.Services
         // שלב 1 - שליחת קוד אימות למייל
         public void SendVerificationCode(string oldUsername)
         {
-            if (!_users.ContainsKey(oldUsername))
+            if (!UserStorage.Users.ContainsKey(oldUsername))
             {
                 throw new KeyNotFoundException("User not found.");
             }
@@ -57,14 +52,17 @@ namespace MonthlyDataApi.Services
                 throw new UnauthorizedAccessException("Invalid verification code.");
             }
 
-            if (!_users.ContainsKey(oldUsername))
+            if (!UserStorage.Users.ContainsKey(oldUsername))
             {
                 throw new KeyNotFoundException("User not found.");
             }
 
+            // שמירת תפקיד המשתמש הישן
+            var userRole = UserStorage.Users[oldUsername].Role;
+
             // עדכון שם המשתמש והססמה
-            _users.Remove(oldUsername);
-            _users[newUsername] = newPassword;
+            UserStorage.Users.Remove(oldUsername);
+            UserStorage.Users[newUsername] = (newPassword, userRole);
 
             _verificationCodes.Remove(email); // מחיקת הקוד אחרי השימוש
         }
