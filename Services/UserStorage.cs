@@ -5,7 +5,7 @@
         public static readonly Dictionary<string, (string Password, string Role)> Users = new()
         {
             { "שירת משה", ("מנהל", "Admin") },
-            { "כולל שירת משה", ("משרד", "Viewer") }
+            { "אור אלחנן", ("שירת משה", "Viewer") }
         };
     }
 }
