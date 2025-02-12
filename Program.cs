@@ -91,7 +91,8 @@ builder.Services.AddCors(options =>
         {
             builder.WithOrigins("http://localhost:4200", "https://shirat-moshe.onrender.com")
                    .AllowAnyMethod()
-                   .AllowAnyHeader();
+                   .AllowAnyHeader()
+                   .AllowCredentials();
         });
 });
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
