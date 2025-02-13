@@ -348,7 +348,8 @@ namespace MonthlyDataApi.Services
             //var totalItems = await avrechQuery.CountAsync();
 
             var avrech = await avrechQuery
- 
+                .OrderBy(p => p.LastName)
+                .ThenBy(p => p.FirstName)
                 .Select(p => new AvrechDTO
                 {
                     Id = p.Id,
