@@ -228,7 +228,7 @@ namespace MonthlyDataApi.Services
             _context.Persons.Add(avrech);
             await _context.SaveChangesAsync();
 
-            if(avrech.Status == Status.ראש_כולל || avrech.Status == Status.אברך_רצופות_יום_שלם)
+            if(avrech.Status == Status.ראש_כולל || avrech.Status == Status.יום_שלם)
             {
                 monthlyData = new MonthlyRecord
                 {
