@@ -59,7 +59,7 @@ namespace MonthlyDataApi.Models
             public int TotalAmount { get; set; }
             public int OrElchanan { get; set; }
             public int AddAmount { get; set; }
-            public int Ginusar { get; set; }
+            public int? Ginusar { get; set; }
             public string? Notes { get; set; }
         }
     }
