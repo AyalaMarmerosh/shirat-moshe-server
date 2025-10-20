@@ -87,6 +87,7 @@ namespace MonthlyDataApi.Services
                     TotalAmount = md.TotalAmount,
                     OrElchanan = md.OrElchanan,
                     AddAmount = md.AddAmount,
+                    Ginusar= md.Ginusar,
                     Notes= md.Notes
                 }).ToListAsync();
 
@@ -138,6 +139,7 @@ namespace MonthlyDataApi.Services
                     TotalAmount = p.TotalAmount,
                     OrElchanan = p.OrElchanan,
                     AddAmount = p.AddAmount,
+                    Ginusar = p.Ginusar,
                     Notes = p.Notes
                 })
                 .FirstOrDefaultAsync();
@@ -211,6 +213,7 @@ namespace MonthlyDataApi.Services
                 data.OrElchanan = monthlyRecordDTO.OrElchanan;
                 data.TotalAmount = monthlyRecordDTO.TotalAmount;
                 data.AddAmount = monthlyRecordDTO.AddAmount;
+                data.Ginusar= monthlyRecordDTO.Ginusar;
                 data.Notes = monthlyRecordDTO.Notes;
                 await _context.SaveChangesAsync();
             }
@@ -242,6 +245,7 @@ namespace MonthlyDataApi.Services
                     TotalAmount = 2000,
                     OrElchanan = 2000,
                     AddAmount = 0,
+                    Ginusar= 0,
                     Notes = ""
                 };
             }
@@ -259,6 +263,7 @@ namespace MonthlyDataApi.Services
                     TotalAmount = 1000,
                     OrElchanan = 1000,
                     AddAmount = 0,
+                    Ginusar= 0,
                     Notes = ""
                 };
             }
@@ -391,6 +396,7 @@ namespace MonthlyDataApi.Services
                                 TotalAmount = md.TotalAmount,
                                 OrElchanan = md.OrElchanan,
                                 AddAmount = md.AddAmount,
+                                Ginusar= md.Ginusar,
                                 Notes= md.Notes
                             }).ToListAsync();
 

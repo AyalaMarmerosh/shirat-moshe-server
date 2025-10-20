@@ -13,7 +13,7 @@ namespace MonthlyDataApi.Models
             ראש_כולל_אחה_צ_והח_חצי_דתות = 3,
             ראש_כולל = 4,
             יום_שלם = 5,
-            _חצי_יום = 6
+            חצי_יום = 6
         }
 
 
@@ -58,6 +58,7 @@ namespace MonthlyDataApi.Models
             public int TotalAmount { get; set; }
             public int OrElchanan { get; set; }
             public int AddAmount { get; set; }
+            public int Ginusar { get; set; }
             public string? Notes { get; set; }
         }
     }
