@@ -22,7 +22,7 @@ namespace MonthlyDataApi.Services
 
             //var (password, role) = UserStorage.Users[username]; // מקבל את התפקיד של המשתמש
 
-            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("your-very-long-secret-key-32-bytes-long!your-very-long-secret-key-32-bytes-long!"));
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
             var issuer = _configuration["Jwt:Issuer"];
             var audience = _configuration["Jwt:Audience"];
 

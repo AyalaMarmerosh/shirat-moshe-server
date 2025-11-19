@@ -89,7 +89,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowSpecificOrigins",
         builder =>
         {
-            builder.WithOrigins("http://localhost:4200", "https://shirat-moshe.onrender.com")
+            builder.WithOrigins("http://localhost:4200", "https://shirat-moshe.onrender.com","https://shirat-moshe-server.onrender.com")
                    .AllowAnyMethod()
                    .AllowAnyHeader()
                    .AllowCredentials();
