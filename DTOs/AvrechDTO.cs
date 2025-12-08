@@ -21,7 +21,7 @@ namespace MonthlyDataApi.DTOs
         public string? Bank { get; set; }
         public string? Branch { get; set; }
         public string? AccountNumber { get; set; }
-        public bool IsSuspended { get; set; }
+        public bool isSuspended { get; set; }
 
         //public List<MonthlyRecordDTO> MonthlyRecord { get; set; 
 

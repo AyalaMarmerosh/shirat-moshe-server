@@ -63,7 +63,7 @@ namespace MonthlyDataApi.Services
                     Bank = p.Bank,
                     Branch = p.Branch,
                     AccountNumber= p.AccountNumber,
-                    IsSuspended= p.IsSuspended
+                    isSuspended= p.isSuspended
                 }).ToListAsync();
 
             var totalAvrechim = await _context.Persons.CountAsync();
@@ -117,7 +117,7 @@ namespace MonthlyDataApi.Services
                     Bank = p.Bank,
                     Branch = p.Branch,
                     AccountNumber = p.AccountNumber,
-                    IsSuspended = p.IsSuspended
+                    isSuspended = p.isSuspended 
                 })
                 .FirstOrDefaultAsync();
 
@@ -195,7 +195,7 @@ namespace MonthlyDataApi.Services
                 avrech.CellPhone= avrechDTO.CellPhone;
                 avrech.CellPhone2= avrechDTO.CellPhone2;
                 avrech.HouseNumber= avrechDTO.HouseNumber;
-                avrech.IsSuspended= avrechDTO.IsSuspended;
+                avrech.isSuspended= avrechDTO.isSuspended;
                 await _context.SaveChangesAsync();
             }
         }
@@ -376,7 +376,7 @@ namespace MonthlyDataApi.Services
                     DateOfBirth = p.DateOfBirth,
                     HouseNumber = p.HouseNumber,
                     TeudatZeut = p.TeudatZeut,
-                    IsSuspended= p.IsSuspended
+                    isSuspended = p.isSuspended
                 })
                 .ToListAsync();
 
@@ -428,7 +428,7 @@ namespace MonthlyDataApi.Services
                     Bank = p.Bank,
                     Branch = p.Branch,
                     AccountNumber = p.AccountNumber,
-                    IsSuspended= p.IsSuspended
+                    isSuspended = p.isSuspended
                 }).ToListAsync();
 
             return avrech;
