@@ -44,6 +44,7 @@ namespace MonthlyDataApi.Models
             public string? Bank { get; set; }
             public string? Branch { get; set; }
             public string? AccountNumber { get; set; }
+            public bool IsSuspended { get; set; }
         }
 
         public class MonthlyRecord
