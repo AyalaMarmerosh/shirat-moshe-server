@@ -25,6 +25,8 @@ namespace MonthlyDataApi.Services
         Task<IEnumerable<AvrechDTO>> SearchAvrechAsync(string query, string presence, string datot, string status);
         Task<IEnumerable<MonthlyRecordDTO>> GetLastMonthDataAsync(string year, string month);
         Task<IEnumerable<AvrechDTO>> getAvrechByIdAsync(int id);
+        Task ReplaceDefaultDataAsync(MonthlyRecord[] records);
+
 
     }
 
@@ -433,5 +435,27 @@ namespace MonthlyDataApi.Services
 
             return avrech;
         }
+
+        public async Task ReplaceDefaultDataAsync(MonthlyRecord[] records)
+        {
+            // מחיקת נתוני ברירת מחדל קיימים
+            var oldDefaults = await _context.MonthlyRecords
+                .Where(r => r.Year == "Default" && r.Month == "Default")
+                .ToListAsync();
+
+            _context.MonthlyRecords.RemoveRange(oldDefaults);
+
+            // הוספת החדשים
+            foreach (var r in records)
+            {
+                r.Id = 0; // חשוב! כדי ש־EF יבין שזה insert
+                r.Year = "Default";
+                r.Month = "Default";
+                _context.MonthlyRecords.Add(r);
+            }
+
+            await _context.SaveChangesAsync();
+        }
+
     }
 }

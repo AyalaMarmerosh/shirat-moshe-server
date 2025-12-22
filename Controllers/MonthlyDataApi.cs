@@ -257,6 +257,19 @@ namespace MonthlyDataApi.Controllers
             }
         }
 
+        [HttpPost("save-default")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> SaveDefaultData([FromBody] MonthlyRecord[] records)
+        {
+            if (records == null || records.Length == 0)
+                return BadRequest("No data received");
+
+            await _dataService.ReplaceDefaultDataAsync(records);
+
+            return Ok("Default data updated");
+        }
+
+
     }
 
 }
