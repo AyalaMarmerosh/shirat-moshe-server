@@ -299,28 +299,51 @@ namespace MonthlyDataApi.Services
         }
 
 
+        //public async Task AddData(MonthlyRecord[] monthlyRecords)
+        //{
+        //    var conflicts = new List<string>();
+
+        //    foreach ( var rec in monthlyRecords )
+        //    {
+        //        var existingRecord = await _context.MonthlyRecords.AnyAsync(r => r.PersonId == rec.PersonId && r.Month == rec.Month && r.Year == rec.Year);
+
+        //        if (existingRecord)
+        //        {
+        //            conflicts.Add($"נתונים עבור {rec.Month}/{rec.Year} עבור אדם עם מזהה {rec.PersonId} כבר קיימים.");
+        //        }
+
+        //        if (conflicts.Any())
+        //        {
+        //            throw new InvalidOperationException(string.Join(" | ", conflicts));
+        //        }
+        //    }
+        //    _context.MonthlyRecords.AddRangeAsync(monthlyRecords);
+        //    await _context.SaveChangesAsync();
+
+        //}
+
         public async Task AddData(MonthlyRecord[] monthlyRecords)
         {
-            var conflicts = new List<string>();
+            string year = monthlyRecords.First().Year;
+            string month = monthlyRecords.First().Month;
 
-            foreach ( var rec in monthlyRecords )
+            // שלב 1: איתור נתונים קיימים
+            var existing = await _context.MonthlyRecords
+                .Where(r => r.Year == year && r.Month == month)
+                .ToListAsync();
+
+            // שלב 2: מחיקה אם קיימים
+            if (existing.Any())
             {
-                var existingRecord = await _context.MonthlyRecords.AnyAsync(r => r.PersonId == rec.PersonId && r.Month == rec.Month && r.Year == rec.Year);
-
-                if (existingRecord)
-                {
-                    conflicts.Add($"נתונים עבור {rec.Month}/{rec.Year} עבור אדם עם מזהה {rec.PersonId} כבר קיימים.");
-                }
-
-                if (conflicts.Any())
-                {
-                    throw new InvalidOperationException(string.Join(" | ", conflicts));
-                }
+                _context.MonthlyRecords.RemoveRange(existing);
+                await _context.SaveChangesAsync();
             }
-            _context.MonthlyRecords.AddRangeAsync(monthlyRecords);
-            await _context.SaveChangesAsync();
 
+            // שלב 3: הוספת חדשים
+            await _context.MonthlyRecords.AddRangeAsync(monthlyRecords);
+            await _context.SaveChangesAsync();
         }
+
 
         public async Task<IEnumerable<AvrechDTO>> SearchAvrechAsync(string query, string presence, string datot, string status)
         {
