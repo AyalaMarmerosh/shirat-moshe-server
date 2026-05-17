@@ -152,7 +152,7 @@ namespace MonthlyDataApi.Controllers
         public async Task<ActionResult<bool>> Exists(string year, string month)
         {
             var exists = await _dataService.CheckMonthlyDataExists(year, month);
-            return Ok(exists);
+            return Ok(new { exists });
         }
 
         [HttpPost("addData")]
