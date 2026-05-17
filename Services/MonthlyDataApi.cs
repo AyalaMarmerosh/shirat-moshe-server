@@ -21,6 +21,7 @@ namespace MonthlyDataApi.Services
         Task UpdateData(int id, MonthlyRecordDTO monthlyRecordDTO); // 
         Task AddAvrech(Person avrech); // מתודה להוספת אברך
         Task AddOneData(MonthlyRecord data); // מתודה להוספת 
+        Task<bool> CheckMonthlyDataExists(string year, string month);
         Task AddData(MonthlyRecord[] monthlyRecords);
         Task<IEnumerable<AvrechDTO>> SearchAvrechAsync(string query, string presence, string datot, string status);
         Task<IEnumerable<MonthlyRecordDTO>> GetLastMonthDataAsync(string year, string month);
@@ -321,6 +322,12 @@ namespace MonthlyDataApi.Services
         //    await _context.SaveChangesAsync();
 
         //}
+
+        public async Task<bool> CheckMonthlyDataExists(string year, string month)
+        {
+            return await _context.MonthlyRecords
+                .AnyAsync(r => r.Year == year && r.Month == month);
+        }
 
         public async Task AddData(MonthlyRecord[] monthlyRecords)
         {

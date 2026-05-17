@@ -148,6 +148,13 @@ namespace MonthlyDataApi.Controllers
             }
         }
 
+        [HttpGet("exists")]
+        public async Task<ActionResult<bool>> Exists(string year, string month)
+        {
+            var exists = await _dataService.CheckMonthlyDataExists(year, month);
+            return Ok(exists);
+        }
+
         [HttpPost("addData")]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> AddData([FromBody] MonthlyRecord[] monthlyRecords)
